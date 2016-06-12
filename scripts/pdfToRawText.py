@@ -11,6 +11,8 @@ for subdir, dirs, files in os.walk("working/pdfs"):
         filepath = os.path.join(subdir, filename)
         if not filepath.endswith(".pdf"):
             raise Exception("Unexpected file path: %s" % os.path.join(subdir, filename))
+        print os.path.join(subdir, filename)
+        print os.path.join(newdir, os.path.splitext(filename)[0]+".txt")
         call(["pdftotext", 
               "-raw",
               os.path.join(subdir, filename),
