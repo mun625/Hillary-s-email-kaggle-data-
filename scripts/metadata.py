@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import csv
 import json
 import re
@@ -28,6 +30,6 @@ writer = csv.writer(f)
 writer.writerow(header)
 
 for row in data["Results"]:
-    writer.writerow([row[col] for col in header])
+    writer.writerow([unicode(row[col]).encode('utf-8') for col in header])
 
 f.close()

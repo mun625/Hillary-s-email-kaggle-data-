@@ -14,11 +14,12 @@ def normalize_address(raw_address):
     return raw_address.strip()
 
 emails = pd.read_csv("input/emailsNoId.csv")
+
 emails["MetadataTo"].replace(np.nan, "", inplace=True)
 emails["ExtractedTo"].replace(np.nan, "", inplace=True)
 emails["MetadataFrom"].replace(np.nan, "", inplace=True)
 emails["ExtractedFrom"].replace(np.nan, "", inplace=True)
-emails.sort(columns=["DocNumber"], inplace=True)
+emails.sort_values(by=["DocNumber"], inplace=True)
 emails.insert(0, "Id", list(range(1, len(emails)+1)))
 emails.insert(5, "SenderPersonId", np.nan)
 
