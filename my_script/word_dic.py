@@ -78,15 +78,28 @@ print WordDicToScore(word_dict)
 
 print " 1. Word frequently used"
 word_dict = EmailsToWordDict(sorted_emails)
+
 useless_words = []
 useless = open("./useless_word.txt")
 for line in useless:
 	useless_words.append(line.rstrip('\n'))
 print len(useless_words)
 
-#for key, value in sorted(word_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):
-#	if value > 20:
-#		print "%s: %s" % (key, value)
+def TopWords(my_dict, useless_list, num):
+	top_words = {}
+	count = 0
+	for key, value in sorted(my_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):
+		if key not in useless_list:
+			top_words[key] = value
+			count += 1
+		if count == num:
+			break
+	return top_words
+
+top2010 = TopWords(word_dict, useless_words, 50)
+for key, value in sorted(top2010.iteritems(), key=lambda (k,v): (v,k), reverse=True):
+	if value > 20:
+		print "%s: %s" % (key, value)
 
 
 
