@@ -8,7 +8,7 @@ def ScoreDic(fp):
 		score_dic[term] = int(score)	# Convert the score to an integer.
 	return score_dic
 
-def WordDicToScore(word_dic, score_dic = ScoreDic('./AFINN-111.txt')):
+def WordDicToScore(word_dic, score_dic = ScoreDic('AFINN-111.txt')):
 	score = 0
 	for key, value in word_dic.iteritems():
 		if key in score_dic.keys():

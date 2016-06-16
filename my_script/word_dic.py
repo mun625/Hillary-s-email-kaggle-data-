@@ -34,6 +34,17 @@ def SelectEmailsByDate(my_email, start_date, end_date):
 		return my_email.iloc[selection[0][0]:1]
 	return my_email.iloc[selection[0][0]:selection[0][-1]]
 
+def TopWords(my_dict, useless_list, num):
+	top_words = {}
+	count = 0
+	for key, value in sorted(my_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):
+		if key not in useless_list:
+			top_words[key] = value
+			count += 1
+		if count == num:
+			break
+	return top_words
+
 
 emails = pd.read_csv("./output/Emails.csv")
 sorted_emails = emails[['Id','DocNumber','MetadataDateSent','ExtractedDateSent','ExtractedBodyText']]
@@ -77,24 +88,13 @@ print WordDicToScore(word_dict)
 
 
 print " 1. Word frequently used"
-word_dict = EmailsToWordDict(sorted_emails)
+word_dict = EmailsToWordDict(emails2009)
 
 useless_words = []
 useless = open("./useless_word.txt")
 for line in useless:
 	useless_words.append(line.rstrip('\n'))
 print len(useless_words)
-
-def TopWords(my_dict, useless_list, num):
-	top_words = {}
-	count = 0
-	for key, value in sorted(my_dict.iteritems(), key=lambda (k,v): (v,k), reverse=True):
-		if key not in useless_list:
-			top_words[key] = value
-			count += 1
-		if count == num:
-			break
-	return top_words
 
 top2010 = TopWords(word_dict, useless_words, 50)
 for key, value in sorted(top2010.iteritems(), key=lambda (k,v): (v,k), reverse=True):
